@@ -1,7 +1,7 @@
 package save
 
 import (
-	resp "test/internal/lib/api/response"
+	resp "test/internal/models/response"
 )
 
 type Request struct{

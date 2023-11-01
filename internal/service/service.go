@@ -1,7 +1,7 @@
 package service
 
 import (
-	"test/internal/models"
+	"test/internal/models/url"
 
 
 )

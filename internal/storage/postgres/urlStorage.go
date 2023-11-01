@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"test/internal/models"
+	"test/internal/models/url"
 	"github.com/Masterminds/squirrel"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
