@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"os"
 	"test/internal/config"
+	// "test/internal/http-server/middleware/logger"
 	"test/internal/storage/postgres"
 
+	"github.com/gin-gonic/gin"
 	"golang.org/x/exp/slog"
 )
 
@@ -48,18 +50,10 @@ func main(){
 
 	//middleware
 
-	//ruter
-	// router := gin.NewRouter()
-
-	// router.Use(middleware.RequestID())
-	// router.Use(middleware.Logger())
-	// router.Use(middleware.Recoverer())
-	// router.Use(middleware.URLFormat())
-	// r := gin.New()
+	// router
+	router := gin.New()
+	router.Use()
 	// r.Run(":8080")
-	
-
-
 
 }
 	//init DB	

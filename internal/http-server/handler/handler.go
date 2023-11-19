@@ -1,9 +1,20 @@
 package handler
 
-// import (
+import (
+	"github.com/gin-gonic/gin"
 
-// )
+)
 
-// type Handler struct{
-// 	services *service.Services
-// }
+func (h *Handler) New() *gin.Engine{
+	router := gin.New()
+
+	router.Use(.RequestID())
+	router.Use(middleware.Logger())
+	router.Use(middleware.Recoverer())
+	router.Use(middleware.URLFormat())
+
+	h.UrlShortnerRouter(router)
+
+}
+
+func (h *Handler) NewRequest()
