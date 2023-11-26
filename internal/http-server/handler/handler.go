@@ -1,20 +1,26 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
+	"test/internal/http-server/middleware"
+	"test/internal/service/storage"
 
+	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) New() *gin.Engine{
-	router := gin.New()
 
-	router.Use(.RequestID())
-	router.Use(middleware.Logger())
-	router.Use(middleware.Recoverer())
-	router.Use(middleware.URLFormat())
-
-	h.UrlShortnerRouter(router)
-
+type Handler struct{
+	service *service.storage
 }
 
-func (h *Handler) NewRequest()
+func NewHandler(service *service.Service) *Handler{
+	return &Handler{service: service}
+}
+
+func (h *Handler) initRouter() *gin.Engine{
+	router := gin.New()
+	router.Use(middleware.Error())
+
+	h.ShortnerRoute(router)
+
+	return router
+}

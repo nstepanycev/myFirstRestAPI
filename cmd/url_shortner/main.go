@@ -4,6 +4,11 @@ import (
 	"fmt"
 	"os"
 	"test/internal/config"
+	handler "test/internal/http-server/Handler"
+	"test/internal/http-server/middleware"
+	"test/internal/http-server/middleware/logger"
+	"test/internal/service"
+
 	// "test/internal/http-server/middleware/logger"
 	"test/internal/storage/postgres"
 
@@ -51,8 +56,8 @@ func main(){
 	//middleware
 
 	// router
-	router := gin.New()
-	router.Use()
+	service := service.NewService(db)
+	handlers := handler.NewHandler(service)
 	// r.Run(":8080")
 
 }
