@@ -62,7 +62,7 @@ func main(){
 	handlers := handler.NewHandler(service)
 
 	srv := new(httpserver.Server)
-	if err := srv.Run(cfg.HTTPServer, handlers.initRouter()); err != nil{
+	if err := srv.Run(config.HTTPServer{}, handlers.InitRouter()); err != nil{ // fix config
 		fmt.Println(err)
 		os.Exit(1)
 	}

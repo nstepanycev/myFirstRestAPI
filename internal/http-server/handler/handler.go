@@ -16,7 +16,7 @@ func NewHandler(service *storage.Service) *Handler{
 	return &Handler{service: service}
 }
 
-func (h *Handler) initRouter() *gin.Engine{
+func (h *Handler) InitRouter() *gin.Engine{
 	router := gin.New()
 	router.Use(middleware.Error())
 
