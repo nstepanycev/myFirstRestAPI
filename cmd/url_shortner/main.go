@@ -4,15 +4,17 @@ import (
 	"fmt"
 	"os"
 	"test/internal/config"
-	handler "test/internal/http-server/Handler"
-	"test/internal/http-server/middleware"
-	"test/internal/http-server/middleware/logger"
-	"test/internal/service"
+	httpserver "test/internal/http-server"
+	handler "test/internal/http-server/handler"
+
+	// "test/internal/http-server/middleware"
+	// "test/internal/http-server/middleware/logger"
+	"test/internal/service/storage"
 
 	// "test/internal/http-server/middleware/logger"
-	"test/internal/storage/postgres"
+	"test/internal/service/postgres"
 
-	"github.com/gin-gonic/gin"
+	// "github.com/gin-gonic/gin"
 	"golang.org/x/exp/slog"
 )
 
@@ -56,8 +58,14 @@ func main(){
 	//middleware
 
 	// router
-	service := service.NewService(db)
+	service := storage.NewService(db)
 	handlers := handler.NewHandler(service)
+
+	srv := new(httpserver.Server)
+	if err := srv.Run(cfg.HTTPServer, handlers.initRouter()); err != nil{
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	// r.Run(":8080")
 
 }

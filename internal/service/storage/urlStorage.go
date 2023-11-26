@@ -10,6 +10,9 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+const (
+	urlDb = "url"
+)
 
 type URLStorage struct{
 	db *pgxpool.Pool

@@ -1,20 +1,21 @@
 package handler
 
 import (
+	"net/http"
 	"strconv"
 	models "test/internal/models/save"
+	// "test/internal/service/storage"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 // Create URL to database
 func (h *Handler) CreateURL(c *gin.Context){
-	var urls models.UrlToSaveService
+	var urls *models.UrlToSaveService
 	if err := c.BindJSON(&urls); err != nil{
 		_ = c.Error(err)
 		return
 	}
-	url, err := h.service.SaveURL(urls)
+	url, err := h.service.Storage.SaveURL(urls)
 	if err != nil{
 		_ = c.Error(err)
 		return
@@ -28,7 +29,7 @@ func (h *Handler) GetURLbyId(c *gin.Context){
 		_ = c.Error(err)
 		return
 	}
-	url, err := h.service.URLSave.GetURL(id)
+	url, err := h.service.Storage.GetURL(id)
 	if err != nil{
 		_ = c.Error(err)
 		return

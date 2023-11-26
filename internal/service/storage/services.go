@@ -2,6 +2,7 @@ package storage
 
 import (
 	"test/internal/models/save"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -14,7 +15,7 @@ type Service struct{
 	Storage
 }
 
-func NewReposytory(db *pgxpool.Pool) *Service{
+func NewService(db *pgxpool.Pool) *Service{
 	return &Service{
 		Storage: NewClientStorage(db),
 	}
