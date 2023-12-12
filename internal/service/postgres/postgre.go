@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"test/internal/config"
+
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -12,16 +14,9 @@ const (
 	urlDb = "url"
 )
 
-type DbConfig struct {
-	DbHost string
-	DbPort string
-	DbName string
-	DbUser string
-	DbPass string
-}
 
 
-func ConnectToDB(cfg *DbConfig) (*pgxpool.Pool, error){
+func ConnectToDB(cfg config.StorageConfig) (*pgxpool.Pool, error){
 	connectDb := fmt.Sprintf("DbHost=%s DbPort=%s DbUser=%s"+ "DbPass=%s DbName=%s ", 
 	cfg.DbHost,cfg.DbPort,cfg.DbUser,cfg.DbPass,cfg.DbName)
 	

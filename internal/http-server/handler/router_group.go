@@ -10,8 +10,8 @@ import (
 func (h *Handler) ShortnerRoute(router *gin.Engine){
 	api := router.Group("/shortner")
 	{
-		api.GET("/:id", h.GetURLbyId)
-		api.POST("", h.CreateURL)
+		api.GET("/:id",h.GetURLbyId)
+		api.POST("",h.CreateURL)
 	}
 }
 

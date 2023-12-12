@@ -15,7 +15,7 @@ type Response struct{
 }
 
 type UrlToSaveService struct{
-	Id        *int   `json:"id" db:"id"`
+	Id        *int   `json:"id, omitempty" db:"id"`
 	UrlToSave string `json:"url"`
 	Aliace    string `json:"aliase"`
 }

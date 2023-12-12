@@ -1,9 +1,8 @@
 package handler
 
 import (
-	"test/internal/http-server/middleware"
 	"test/internal/service/storage"
-
+	"test/internal/http-server/middleware/logger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +17,7 @@ func NewHandler(service *storage.Service) *Handler{
 
 func (h *Handler) InitRouter() *gin.Engine{
 	router := gin.New()
-	router.Use(middleware.Error())
+	router.Use(logger.NewMiddleware())
 
 	h.ShortnerRoute(router)
 

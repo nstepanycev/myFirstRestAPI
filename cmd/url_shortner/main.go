@@ -27,50 +27,45 @@ const (
 
 
 func main(){
-	//init config
-	cfg := config.MustLoad()
+
+	cfg := config.LoadConfig()
 	fmt.Println(cfg)
 
-	s := config.DbConfig()
-
 	DataBaseConfig := config.StorageConfig{
-		DbHost: s.DbHost,
-		DbPort: s.DbPort,
-		DbName: s.DbName,
-		DbUser: s.DbUser,
-		DbPass: s.DbPass,
+		DbHost: cfg.StorageConfig.DbHost,
+		DbPort: cfg.StorageConfig.DbPort,
+		DbName: cfg.StorageConfig.DbName,
+		DbUser: cfg.StorageConfig.DbUser,
+		DbPass: cfg.StorageConfig.DbPass,
 	}
-	//^TODO Fix
-
+	//Logger
 	log := setupLogger(cfg.Env)
 	log = log.With(slog.String("env", cfg.Env))
 
 	log.Info("initializing server", slog.String("addres", cfg.ConfigPath))
 	log.Debug("Log config enable")
 	
-	db, err := postgres.ConnectToDB((*postgres.DbConfig)(&DataBaseConfig)) // TO DO Fix Я хз почему такая фигня вложенная разберусь
+	//Database
+	db, err := postgres.ConnectToDB(DataBaseConfig) 
 	if err != nil{
 		os.Exit(1)
 		log.Error("Error to connect to DB")
 	}
 	defer db.Close()
 
-	//middleware
-
-	// router
+	//
 	service := storage.NewService(db)
 	handlers := handler.NewHandler(service)
 
+
+	//Router
 	srv := new(httpserver.Server)
 	if err := srv.Run(config.HTTPServer{}, handlers.InitRouter()); err != nil{ // fix config
 		fmt.Println(err)
-		os.Exit(1)
 	}
-	// r.Run(":8080")
 
 }
-	//init DB	
-	//init loger
+
 func setupLogger(env string) *slog.Logger{
 	var log *slog.Logger
 
@@ -82,8 +77,3 @@ func setupLogger(env string) *slog.Logger{
 	}
 	return log
 }
-	//init storage
-
-	
-
-	//init router
