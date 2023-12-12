@@ -10,8 +10,8 @@ import (
 
 type Config struct {
 	Env            string `yaml:"env"`
-	StorageConfig  *StorageConfig
-	HTTPServer     *HTTPServer
+	StorageConfig  StorageConfig
+	HTTPServer     HTTPServer
 	ConfigPath     string `yaml:"config_path"`
 }
 
