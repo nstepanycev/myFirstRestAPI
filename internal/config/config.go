@@ -9,45 +9,29 @@ import (
 )
 
 type Config struct {
-	Env            string `yaml:"env"`
-	StorageConfig  StorageConfig
-	HTTPServer     HTTPServer
-	ConfigPath     string `yaml:"config_path"`
+	Env            string        `yaml:"env"`
+	StorageConfig  StorageConfig `yaml:"db"`
+	HTTP_Server    HTTPServer    `yaml:"http_server"`
+	ConfigPath     string        `yaml:"config_path"`
 }
 
 type HTTPServer struct {
-	Address     string        `yaml:"address" env-default:"localhost:8080"`
+	Host        string        `yaml:"host"`
+	Port        int           `yaml:"port"`
 	Timeout     time.Duration `yaml:"timeout" env-default:"4s"`
 	IdleTimeout time.Duration `yaml:"idle_timeout" env-default:"60s"`
+	// Auth later fix
 	// User        string        `yaml:"user" env-required:"true"`
     // Password    string        `yaml:"password" env-required:"true" env:"HTTP_SERVER_PASSWORD"`
 }
 
 type StorageConfig struct {
-	DbHost string `yaml:"DbHost"`
-	DbPort string `yaml:"DbPort"`
-	DbName string `yaml:"DbName"`
-	DbUser string `yaml:"DbUser"`
-	DbPass string `yaml:"DbPass"`
+	DbHost string `yaml:"dbHost"`
+	DbPort string `yaml:"dbPort"`
+	DbName string `yaml:"dbName"`
+	DbUser string `yaml:"dbUser"`
+	DbPass string `yaml:"dbPass"`
 }
-
-// func MustLoad() *Config {
-// 	return &Config{
-// 		Env: os.Getenv("ENV"),
-// 		HTTPServer: os.Getenv("HTTP_HOST"),
-// 		ConfigPath: os.Getenv("CONFIG_PATH"),
-// 	}
-// }
-
-// func DbConfig() *StorageConfig{
-// 	return &StorageConfig{
-// 		DbHost: os.Getenv("DB_HOST"),
-// 		DbPort: os.Getenv("DB_PORT"),
-// 		DbName: os.Getenv("DB_NAME"),
-// 		DbUser: os.Getenv("DB_USER"),
-// 		DbPass: os.Getenv("DB_PASS"),
-// 	}
-// }
 
 func LoadConfig() *Config{
 	file, err := os.ReadFile("local.yaml")

@@ -11,7 +11,6 @@ type URLGetter interface {
 
 
 // TODO change on gin
-
 // func New(log *slog.Logger, urlGetter URLGetter) http.HandlerFunc {
 //     return func(w http.ResponseWriter, r *http.Request) {
 //         const op = "handlers.url.redirect.New"

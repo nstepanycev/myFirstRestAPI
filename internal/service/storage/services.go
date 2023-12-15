@@ -7,8 +7,8 @@ import (
 )
 
 type Storage interface{
-	SaveURL(urlToSave *models.UrlToSaveService) (int, error)
-	GetURL(id int) (*models.UrlToSaveService, error)
+	SaveURL(URLSave *models.Request) (int, error)
+	GetURL(id int) (*models.Request, error)
 }
 
 type Service struct{

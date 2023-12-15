@@ -2,13 +2,13 @@ env: "local"
 config_path: "local"
 storage_path: "./storage/storage.db"
 http_server:
-  addres: "localhost"
+  host: "localhost"
   port: 8080
   timeout: 4s
   idle_timeout: 60s
 db:
-    DbName: "TestApi"
-    DbUser: "Me"
-    DbPass: "Me"
-    DbHost: "localhost"
-    DbPort: 5432
+    dbName: "TestApi"
+    dbUser: "Me"
+    dbPass: "Me"
+    dbHost: "localhost"
+    dbPort: 5432

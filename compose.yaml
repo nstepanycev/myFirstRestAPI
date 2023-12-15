@@ -2,7 +2,7 @@ services:
   go-app:
     build:
       context: .
-      target: development
+      target: local
     volumes:
       - ./:/app
     env_file:
@@ -19,4 +19,4 @@ services:
     volumes:
       - ./init_db:/docker-entrypoint-initdb.d
     # networks:
-    #   development
+    #   - local

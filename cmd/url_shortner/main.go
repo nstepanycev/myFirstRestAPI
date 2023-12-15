@@ -1,20 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"os"
 	"test/internal/config"
 	httpserver "test/internal/http-server"
 	handler "test/internal/http-server/handler"
-
-	// "test/internal/http-server/middleware"
-	// "test/internal/http-server/middleware/logger"
-	"test/internal/service/storage"
-
-	// "test/internal/http-server/middleware/logger"
 	"test/internal/service/postgres"
-
+	"test/internal/service/storage"
 	// "github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/exp/slog"
 )
 
@@ -29,7 +24,6 @@ const (
 func main(){
 
 	cfg := config.LoadConfig()
-	fmt.Println(cfg)
 
 	DataBaseConfig := config.StorageConfig{
 		DbHost: cfg.StorageConfig.DbHost,
@@ -42,16 +36,23 @@ func main(){
 	log := setupLogger(cfg.Env)
 	log = log.With(slog.String("env", cfg.Env))
 
-	log.Info("initializing server", slog.String("addres", cfg.ConfigPath))
+	log.Info("initializing server", slog.String("host", cfg.HTTP_Server.Host))
 	log.Debug("Log config enable")
 	
 	//Database
 	db, err := postgres.ConnectToDB(DataBaseConfig) 
 	if err != nil{
-		os.Exit(1)
-		log.Error("Error to connect to DB")
+		slog.String("Err connect to database: %s", err.Error())
 	}
-	defer db.Close()
+	defer func(db *pgxpool.Pool, ctx context.Context){
+		db.Close()
+	}(db, context.Background())
+
+
+
+	// router := gin.New()
+	// router.Use(logger.NewMiddleware())
+	// ShortnerRoute(router)
 
 	//
 	service := storage.NewService(db)
@@ -60,8 +61,8 @@ func main(){
 
 	//Router
 	srv := new(httpserver.Server)
-	if err := srv.Run(config.HTTPServer{}, handlers.InitRouter()); err != nil{ // fix config
-		fmt.Println(err)
+	if err := srv.Run(cfg.HTTP_Server, handlers.InitRouter()); err != nil{
+		slog.String("Error occurred while running http server: %s", err.Error())
 	}
 
 }
