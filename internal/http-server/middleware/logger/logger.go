@@ -18,7 +18,8 @@ func NewMiddleware() gin.HandlerFunc{
     return func(c *gin.Context){
         ctx := context.WithValue(c.Request.Context(),"ContextKey",c)
         c.Request = c.Request.WithContext(ctx)
-        
+        fmt.Println(ctx, c.Request)
+
         log := slog.With(
             slog.String("component", "middleware/logger"),
         )

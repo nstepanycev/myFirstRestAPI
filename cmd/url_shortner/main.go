@@ -6,8 +6,11 @@ import (
 	"test/internal/config"
 	httpserver "test/internal/http-server"
 	handler "test/internal/http-server/handler"
-	"test/internal/service/postgres"
-	"test/internal/service/storage"
+	// "test/internal/service/postgres"
+	storage "test/internal/services/storage"
+	"test/internal/services/postgres"
+	"test/internal/services"
+
 	// "github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/exp/slog"
@@ -55,13 +58,14 @@ func main(){
 	// ShortnerRoute(router)
 
 	//
-	service := storage.NewService(db)
-	handlers := handler.NewHandler(service)
+	repos := storage.NewReposytory(db)
+	service := service.NewService(repos)
+	handler := handler.NewHandler(service)
 
 
 	//Router
 	srv := new(httpserver.Server)
-	if err := srv.Run(cfg.HTTP_Server, handlers.InitRouter()); err != nil{
+	if err := srv.Run(cfg.HTTP_Server, handler.InitRouter()); err != nil{
 		slog.String("Error occurred while running http server: %s", err.Error())
 	}
 

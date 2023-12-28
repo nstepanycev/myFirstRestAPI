@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 	"test/internal/api"
 	models "test/internal/models/save"
 
@@ -14,8 +13,9 @@ import (
 
 const aliasLength = 6
 
+
 // Create URL to database
-func (h *Handler) CreateURL(c *gin.Context){
+func (h *Handler) CreateURLService(c *gin.Context){
 
 	//JSON resp
 	var req models.Request
@@ -38,7 +38,7 @@ func (h *Handler) CreateURL(c *gin.Context){
 		aliase = api.NewRandomString(aliasLength)
 	}
 	//Use Interface 
-	url, err := h.service.SaveURL(&req)
+	url, err := h.service.CreateURLService(&req)
 	if err != nil{
 		_ = c.Error(err)
 		return
@@ -46,13 +46,19 @@ func (h *Handler) CreateURL(c *gin.Context){
 	c.JSON(http.StatusCreated, url)
 }
 // Get URL by id
-func (h *Handler) GetURLbyId(c *gin.Context){
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil{
+func (h *Handler) GetURLbyIdService(c *gin.Context){
+	var req models.Request
+	if err := c.BindJSON(&req); err != nil{
 		_ = c.Error(err)
 		return
 	}
-	url, err := h.service.Storage.GetURL(id)
+
+	// id, err := strconv.Atoi(c.Param("id"))
+	// if err != nil{
+	// 	_ = c.Error(err)
+	// 	return
+	// }
+	url, err := h.service.GetURLService(&req)
 	if err != nil{
 		_ = c.Error(err)
 		return

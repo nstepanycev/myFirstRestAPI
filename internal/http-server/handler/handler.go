@@ -1,8 +1,10 @@
 package handler
 
 import (
-	"test/internal/service/storage"
 	"test/internal/http-server/middleware/logger"
+	service "test/internal/services"
+	// "test/internal/services/storage"
+
 	"github.com/gin-gonic/gin"
 	// "test/internal/models/save"
 	// "github.com/go-playground/validator/v10"
@@ -11,10 +13,10 @@ import (
 
 
 type Handler struct{
-	service *storage.Service
+	service *service.Service
 }
 
-func NewHandler(service *storage.Service) *Handler{
+func NewHandler(service *service.Service) *Handler{
 	return &Handler{service: service}
 }
 
@@ -33,7 +35,9 @@ func NewHandler(service *storage.Service) *Handler{
 // }
 
 
-
+// func (h Handler) getServices(gin.Context){
+// 	serviceListr, err := h.service.GetURL()
+// }
 
 
 
@@ -45,8 +49,8 @@ func NewHandler(service *storage.Service) *Handler{
 func (h *Handler) ShortnerRoute(router *gin.Engine){
 	api := router.Group("/shortner")
 	{
-		api.GET("/:id",h.GetURLbyId)
-		api.POST("",h.CreateURL)
+		api.GET("/:id",h.GetURLbyIdService)
+		api.POST("",h.CreateURLService)
 	}
 }
 
@@ -57,10 +61,4 @@ func (h *Handler) InitRouter() *gin.Engine{
 	// h.ShortnerRoute(router)
 	return router
 	
-}
-
-func New() gin.HandlerFunc{
-	return func(c *gin.Context){
-		
-	}
 }
