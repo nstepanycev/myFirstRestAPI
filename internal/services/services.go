@@ -2,21 +2,21 @@ package service
 
 import (
 	"test/internal/models/save"
-	"test/internal/services/storage"
+	"test/internal/services/repo"
 
 )
 
 type Storage interface{
-	CreateURLService(service *models.Request) (int, error)
-	GetURLService(service *models.Request) (*models.Request, error)
+	CreateURLService(service *models.Request) (*models.Request, error)
+	GetURLService(service int) (*models.Request, error)
 }
 
 type Service struct{
 	Storage
 }
 
-func NewService(repos *storage.Repos) *Service{
+func NewService(repos *repos.Repos) *Service{
 	return &Service{
-		Storage: NewUrlService(repos),
+		Storage: NewUrlService(repos.URL),
 	}
 }

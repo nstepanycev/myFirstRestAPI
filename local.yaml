@@ -3,7 +3,7 @@ config_path: "local"
 storage_path: "./storage/storage.db"
 http_server:
   host: "localhost"
-  port: 8080
+  port: "8080"
   timeout: 4s
   idle_timeout: 60s
 db:

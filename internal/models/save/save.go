@@ -5,7 +5,7 @@ import (
 )
 
 type Request struct{
-	Id     int   `json:"id" db:"id"`
+	Id     int    `json:"id,omitempty" db:"id,omitempty"`
 	URL    string `json:"url"`
 	Aliase string `json:"aliase,omitempty"`
 }

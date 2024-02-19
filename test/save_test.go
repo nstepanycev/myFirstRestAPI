@@ -2,7 +2,7 @@ package test
 
 import (
 	"testing"
-	"http"
+	"net/http"
 	"fmt"
 )
 

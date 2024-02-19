@@ -17,10 +17,10 @@ type Config struct {
 
 type HTTPServer struct {
 	Host        string        `yaml:"host"`
-	Port        int           `yaml:"port"`
+	Port        string        `yaml:"port"`
 	Timeout     time.Duration `yaml:"timeout" env-default:"4s"`
 	IdleTimeout time.Duration `yaml:"idle_timeout" env-default:"60s"`
-	// Auth later fix
+	// Auth later TODO
 	// User        string        `yaml:"user" env-required:"true"`
     // Password    string        `yaml:"password" env-required:"true" env:"HTTP_SERVER_PASSWORD"`
 }

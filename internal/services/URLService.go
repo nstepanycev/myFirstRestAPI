@@ -2,22 +2,23 @@ package service
 
 import (
 	"test/internal/models/save"
-	"test/internal/services/storage"
+	"test/internal/services/repo"
+
 )
 
 
 type URLService struct{
-	repos *storage.Repos
+	repo repos.URL
 }
 
-func NewUrlService(repos *storage.Repos) *URLService{
-	return &URLService{repos: repos}
+func NewUrlService(repo repos.URL) *URLService{
+	return &URLService{repo: repo}
 }
 
-func (s *URLService) GetURLService(URLService *models.Request)(*models.Request, error){
-	return s.repos.GetURL(URLService)
+func (s *URLService) GetURLService(URLService int)(*models.Request, error){
+	return s.repo.GetURL(URLService)
 }
 
-func (s *URLService) CreateURLService(URLService *models.Request)(int, error){
-	return s.repos.SaveURL(URLService)
+func (s *URLService) CreateURLService(URLService *models.Request)(*models.Request, error){
+	return s.repo.SaveURL(URLService)
 }
