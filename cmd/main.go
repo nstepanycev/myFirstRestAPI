@@ -51,14 +51,6 @@ func main(){
 		db.Close()
 	}(db, context.Background())
 
-
-
-	// router := gin.New()
-	// router.Use(logger.NewMiddleware())
-	// router.GET("/:",GetURL)
-
-	// h.ShortnerRoute(router)
-
 	//
 	repos := repos.NewReposytory(db)
 	service := service.NewService(repos)
