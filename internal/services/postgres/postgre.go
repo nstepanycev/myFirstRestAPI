@@ -22,7 +22,7 @@ func NewClientStorage(db *pgxpool.Pool) *URLStorage{
 
 func ConnectToDB(cfg config.StorageConfig) (*pgxpool.Pool, error){
 	connectDb := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
-	cfg.DbHost,cfg.DbPort,cfg.DbUser,cfg.DbPass,cfg.DbName)
+	cfg.DbUser,cfg.DbPass,cfg.DbHost,cfg.DbPort,cfg.DbName)
 
 	db, err := pgxpool.New(context.Background(),connectDb)
 	if err != nil{

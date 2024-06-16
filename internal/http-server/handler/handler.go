@@ -4,6 +4,7 @@ import (
 	service "test/internal/services"
 	models "test/internal/models/save"
 	"github.com/gin-gonic/gin"
+	"strconv"
 	"net/http"
 	"github.com/go-playground/validator/v10"
 )
@@ -69,32 +70,34 @@ func (h *Handler) CreateURLService(c *gin.Context){
 }
 // Get URL by id
 func (h *Handler) GetURLbyIdService(c *gin.Context){
-	// id, err := strconv.Atoi(c.Param("id"))
-	// if err != nil{
-	// 	_ = c.Error(err)
-	// }
-	// url, err := h.service.GetURLService(id)
-	// if err != nil{
-	// 	_ = c.Error(err)
-	// 	return
-	// }
 	
-
-	var req models.Request
-	if err := c.BindJSON(&req); err != nil{
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil{
 		_ = c.Error(err)
-		return
 	}
-
-	// id, err := strconv.Atoi(c.Param("id"))
-	// if err != nil{
-	// 	_ = c.Error(err)
-	// 	return
-	// }
-	url, err := h.service.GetURLService(&req)
+	url, err := h.service.GetURLService(id)
 	if err != nil{
 		_ = c.Error(err)
 		return
 	}
+	
+
+	// var req models.Request
+	// if err := c.BindJSON(&req); err != nil{
+	// 	_ = c.Error(err)
+	// 	return
+	// }
+
+	// id, err := strconv.Atoi(c.Param("id"))
+	// if err != nil{
+	// 	_ = c.Error(err)
+	// 	return
+	// }
+
+	// url, err := h.service.GetURLService(&req)
+	// if err != nil{
+	// 	_ = c.Error(err)
+	// 	return
+	// }
 	c.JSON(http.StatusOK, url)
 }

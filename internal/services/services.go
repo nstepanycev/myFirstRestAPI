@@ -8,7 +8,7 @@ import (
 
 type Storage interface{
 	CreateURLService(service *models.Request) (*models.Request, error)
-	GetURLService(service *models.Request) ([]models.Request, error)
+	GetURLService(id int) ([]models.Request, error)
 }
 
 type Service struct{

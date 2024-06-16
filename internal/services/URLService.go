@@ -15,7 +15,7 @@ func NewUrlService(repo repos.URL) *URLService{
 	return &URLService{repo: repo}
 }
 
-func (s *URLService) GetURLService(URLService *models.Request)([]models.Request, error){
+func (s *URLService) GetURLService(URLService int)([]models.Request, error){
 	return s.repo.GetURL(URLService)
 }
 

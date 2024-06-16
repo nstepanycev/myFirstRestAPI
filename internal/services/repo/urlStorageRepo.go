@@ -17,7 +17,7 @@ const (
 
 type URL interface {
 	SaveURL(request *models.Request) (*models.Request, error)
-	GetURL(request *models.Request) ([]models.Request, error)
+	GetURL(id int) ([]models.Request, error)
 }
 
 type URLStorage struct {
@@ -31,7 +31,7 @@ func NewUrlDatabase(db *pgxpool.Pool) *URLStorage {
 func (s *URLStorage) SaveURL(request *models.Request) (*models.Request, error) {
 	
 	rows, err := s.db.Query(context.Background(),
-	"inser into public.url (id,alias,url) values ('$1','$2','$3')",request.Id,request.URL,request.Aliase)
+	`insert into public.url (id,alias,url) values ($1,$2,$3)`,request.Id,request.URL,request.Aliase)
 	if err != nil{
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (s *URLStorage) SaveURL(request *models.Request) (*models.Request, error) {
 	return request, nil
 }
 
-func (s *URLStorage) GetURL(request *models.Request) ([]models.Request, error) {
+func (s *URLStorage) GetURL(id int) ([]models.Request, error) {
 	// var qUrl *models.Request
 
 	// sql, args, err := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar).
@@ -75,7 +75,7 @@ func (s *URLStorage) GetURL(request *models.Request) ([]models.Request, error) {
 	// }
 
 
-	rows, err := s.db.Query(context.Background(),"select * from public.url where id = $1", request.Id)
+	rows, err := s.db.Query(context.Background(),`select * from public.url where id = $1`, id)
 	if err != nil{
 		return nil, err
 	}
