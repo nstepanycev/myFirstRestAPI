@@ -6,12 +6,9 @@ import (
 	"test/internal/config"
 	httpserver "test/internal/http-server"
 	"test/internal/http-server/handler"
-	repos "test/internal/services/repo"
-	// "test/internal/services/postgres/storage"
-	"test/internal/services/postgres"
+	repos "test/internal/reposytory"
+	"test/internal/services/database"
 	"test/internal/services"
-	// "test/internal/http-server/middleware/logger"
-	// "github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"golang.org/x/exp/slog"
 )
@@ -43,7 +40,7 @@ func main(){
 	log.Debug("Log config enable")
 	
 	//Database
-	db, err := postgres.ConnectToDB(DataBaseConfig) 
+	db, err := database.ConnectToDB(DataBaseConfig) 
 	if err != nil{
 		slog.String("Err connect to database: %s", err.Error())
 	}
@@ -51,7 +48,7 @@ func main(){
 		db.Close()
 	}(db, context.Background())
 
-	//
+	//Handler
 	repos := repos.NewReposytory(db)
 	service := service.NewService(repos)
 	handler := handler.NewHandler(service)

@@ -9,5 +9,5 @@ db:
     dbName: "TestApi"
     dbUser: "Me"
     dbPass: "Me"
-    dbHost: "localhost"
+    dbHost: "0.0.0.0"
     dbPort: 5432

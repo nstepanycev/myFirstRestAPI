@@ -2,7 +2,7 @@ package service
 
 import (
 	"test/internal/models/save"
-	"test/internal/services/repo"
+	"test/internal/reposytory"
 
 )
 

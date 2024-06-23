@@ -1,14 +1,17 @@
 package handler
 
 import (
-	service "test/internal/services"
-	models "test/internal/models/save"
-	"github.com/gin-gonic/gin"
-	"strconv"
 	"net/http"
+	"strconv"
+	"test/internal/api"
+	models "test/internal/models/save"
+	service "test/internal/services"
+
+	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
 
+const aliasLength = 6
 
 type Handler struct{
 	service *service.Service
@@ -54,23 +57,30 @@ func (h *Handler) CreateURLService(c *gin.Context){
 		}
 	}
 	//check aliace
-	// aliase := req.Aliase
-	// if aliase == ""{
-	// 	aliase = api.NewRandomString(aliasLength)
-	// }
+	aliase := req.Aliase
+	if aliase == ""{
+		aliase = api.NewRandomString(aliasLength)
+	}
+
+	urlCreate := models.Request{
+		req.Id,
+		req.URL,
+		aliase,
+	}
 	
-	//Use Interface 
-	resp, err :=  h.service.CreateURLService(&req)
+	//Create object in DB 
+	resp, err :=  h.service.CreateURLService(&urlCreate)
 	if err != nil{
 		_ = c.Error(err)
 		return
 	}
 
+
 	c.JSON(http.StatusCreated, resp)
 }
 // Get URL by id
 func (h *Handler) GetURLbyIdService(c *gin.Context){
-	
+
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil{
 		_ = c.Error(err)
@@ -81,23 +91,5 @@ func (h *Handler) GetURLbyIdService(c *gin.Context){
 		return
 	}
 	
-
-	// var req models.Request
-	// if err := c.BindJSON(&req); err != nil{
-	// 	_ = c.Error(err)
-	// 	return
-	// }
-
-	// id, err := strconv.Atoi(c.Param("id"))
-	// if err != nil{
-	// 	_ = c.Error(err)
-	// 	return
-	// }
-
-	// url, err := h.service.GetURLService(&req)
-	// if err != nil{
-	// 	_ = c.Error(err)
-	// 	return
-	// }
 	c.JSON(http.StatusOK, url)
 }

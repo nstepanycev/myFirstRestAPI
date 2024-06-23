@@ -1,13 +1,15 @@
+version: '3.1'
 services:
-  # api:
-  #   container_name: api
-  #   build: 
-  #     context: .
-  #     target: local
-  #   volumes:
-  #     - ./:/app
-  #   ports:
-  #     - "8080:8080"
+  local:
+    container_name: api
+    build: 
+      context: .
+    volumes:
+      - ./:/app
+    ports:
+      - "8080:8080"
+    networks:
+      - local
     # command: CompileDaemon --build="go build cmd/main.go" --command=./main
   db:
     image: postgres:15.1
@@ -20,5 +22,7 @@ services:
       POSTGRES_PASSWORD: 'Me'
     volumes:
       - ./init_db:/docker-entrypoint-initdb.d
-    # networks:
-    #   - local
+    networks:
+      - local
+networks:
+  local:

@@ -10,28 +10,9 @@ type URLGetter interface {
 }
 
 
-// TODO change on gin
-// func New(log *slog.Logger, urlGetter URLGetter) http.HandlerFunc {
-//     return func(w http.ResponseWriter, r *http.Request) {
+// func NewRedirect(urlGetter URLGetter) http.HandlerFunc {
 //         const op = "handlers.url.redirect.New"
-
-//         log = log.With(
-//             slog.String("op", op),
-//             slog.String("request_id", middleware.GetReqID(r.Context())),
-//         )
-
-//         // Роутер chi позволяет делать вот такие финты -
-//         // получать GET-параметры по их именам.
-//         // Имена определяются при добавлении хэндлера в роутер, это будет ниже.
-//         alias := chi.URLParam(r, "alias")
-//         if alias == "" {
-//             log.Info("alias is empty")
-
-//             render.JSON(w, r, resp.Error("not found"))
-
-//             return
-//         }
-
+		
 //         // Находим URL по алиасу в БД
 //         resURL, err := urlGetter.GetURL(alias)
 //         if errors.Is(err, storage.ErrURLNotFound) {
